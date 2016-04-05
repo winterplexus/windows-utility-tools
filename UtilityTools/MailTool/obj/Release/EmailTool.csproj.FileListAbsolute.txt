@@ -1,0 +1,6 @@
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EmailTool\bin\Release\EmailTool.exe.config
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EmailTool\bin\Release\EmailTool.exe
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EmailTool\bin\Release\EmailTool.pdb
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EmailTool\obj\Release\EmailTool.csprojResolveAssemblyReference.cache
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EmailTool\obj\Release\EmailTool.exe
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EmailTool\obj\Release\EmailTool.pdb

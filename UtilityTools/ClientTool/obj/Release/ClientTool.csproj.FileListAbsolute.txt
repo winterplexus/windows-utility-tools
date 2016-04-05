@@ -1,0 +1,6 @@
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Release\ClientTool.exe.config
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Release\ClientTool.exe
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Release\ClientTool.pdb
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\obj\Release\ClientTool.csprojResolveAssemblyReference.cache
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\obj\Release\ClientTool.exe
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\obj\Release\ClientTool.pdb

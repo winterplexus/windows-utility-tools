@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Dictionary>
+    <Words>
+        <Recognized>
+            <Word>EmailTool</Word>
+            <Word>MailTo</Word>
+        </Recognized>
+        <DiscreteExceptions>
+            <Term>MailTo</Term>
+        </DiscreteExceptions>
+    </Words>
+</Dictionary>
