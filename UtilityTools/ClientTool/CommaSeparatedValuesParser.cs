@@ -1,7 +1,7 @@
 ﻿//
 //  CommaSeparatedValuesParser.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 // 
 using System;
 using System.Collections;
@@ -9,94 +9,69 @@ using System.Text;
 
 namespace ClientTool
 {
-    //
-    //  Comma-separated values parser class.
-    //
-    public class CommaSeparatedValuesParser
+    public class CommaSeparatedValues
     {
-        //
-        //  Separator field.
-        //
-        private const char separator = DefaultSeparator;
-
-        //
-        //  Values list field.
-        //
-        private readonly ArrayList values = new ArrayList();
-
-        //
-        //  Default separator field.
-        //
         public const char DefaultSeparator = ',';
 
-        //
-        //  Class constructor for a comma-separated values parser.
-        //
-        public CommaSeparatedValuesParser()
+        private const char separator = DefaultSeparator;
+
+        private readonly ArrayList list = new ArrayList();
+
+        public CommaSeparatedValues()
         {
-            values.Clear();
+            list.Clear();
         }
 
-        //
-        //  Parse (line into values list).
-        //
         public IEnumerator Parse(string line)
         {
-            var buffer = new StringBuilder();
-            var i = 0;
-
             if (line == null)
             {
-                throw new ArgumentNullException("line");
+                throw new ArgumentNullException(nameof(line));
             }
 
-            values.Clear();
+            list.Clear();
 
             if (line.Length == 0)
             {
-                values.Add(line);
-                return values.GetEnumerator();
+                list.Add(line);
+                return list.GetEnumerator();
             }
+
+            var buffer = new StringBuilder();
+            var i = 0;
 
             do
             {
                 buffer.Length = 0;
                 if ((i < line.Length) && (line[i] == '"'))
                 {
-                    i = GetIndexNextQuotedValue(line, buffer, ++i);
+                    i = GetIndexNextQuoted(line, buffer, ++i);
                 }
                 else
                 {
-                    i = GetIndexNextUnquotedValue(line, buffer, i);
+                    i = GetIndexNextUnquoted(line, buffer, i);
                 }
 
-                values.Add(buffer.ToString());
+                list.Add(buffer.ToString());
                 i++;
-            }
-            while (i < line.Length);
+            } while (i < line.Length);
 
-            return values.GetEnumerator();
+            return list.GetEnumerator();
         }
 
-        //
-        //  Separator property.
-        //
         public char Separator { get; set; }
 
-        //
-        //  Get index for next quoted value.
-        //
-        protected static int GetIndexNextQuotedValue(string text, StringBuilder buffer, int index)
+        protected static int GetIndexNextQuoted(string text, StringBuilder buffer, int index)
         {
             int i;
 
             if (text == null)
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             var len = text.Length;
@@ -126,18 +101,15 @@ namespace ClientTool
             return i;
         }
 
-        //
-        //  Get index for next unquoted value.
-        //
-        protected static int GetIndexNextUnquotedValue(string text, StringBuilder buffer, int index)
+        protected static int GetIndexNextUnquoted(string text, StringBuilder buffer, int index)
         {
             if (text == null)
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             var i = text.IndexOf(separator, index);

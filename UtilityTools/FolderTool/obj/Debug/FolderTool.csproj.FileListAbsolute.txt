@@ -1,0 +1,5 @@
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\Utility Tools\UtilityTools\FolderTool\bin\Debug\Folder Tool.exe.config
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\Utility Tools\UtilityTools\FolderTool\bin\Debug\Folder Tool.exe
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\Utility Tools\UtilityTools\FolderTool\bin\Debug\Folder Tool.pdb
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\Utility Tools\UtilityTools\FolderTool\obj\Debug\Folder Tool.exe
+C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\Utility Tools\UtilityTools\FolderTool\obj\Debug\Folder Tool.pdb

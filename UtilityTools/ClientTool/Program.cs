@@ -1,10 +1,11 @@
 ﻿//
 //  Program.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 //
 using System;
 using System.IO;
+using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -13,14 +14,8 @@ using System.Text;
 
 namespace ClientTool
 {
-    //
-    //  Program class.
-    //
     public static class Program
     {
-        //
-        //  Main driver.
-        //
         public static void Main(string[] arguments)
         {
             DisplayVersion();
@@ -32,9 +27,6 @@ namespace ClientTool
             }
         }
 
-        //
-        //  Display version.
-        //
         public static void DisplayVersion()
         {
             var assembly = Assembly.GetEntryAssembly();
@@ -58,12 +50,9 @@ namespace ClientTool
                 Console.WriteLine("{0}", ((AssemblyCopyrightAttribute)copyrightAttributes[0]).Copyright);
             }
 #endif
-            Console.Write("\r\n");
+            Console.Write(Environment.NewLine);
         }
 
-        //
-        //  Send request.
-        //
         private static void SendRequest(Parameters parameters)
         {
             try
@@ -72,17 +61,14 @@ namespace ClientTool
             }
             catch (WebException we)
             {
-                Console.WriteLine("web exception-> {0}\r\n{1}", we.Message, we.StackTrace);
+                Console.WriteLine("web exception-> {0}" + Environment.NewLine + "{1}", we.Message, we.StackTrace);
             }
             catch (IOException ioe)
             {
-                Console.WriteLine("I/O exception-> {0}\r\n{1}", ioe.Message, ioe.StackTrace);
+                Console.WriteLine("I/O exception-> {0}" + Environment.NewLine + "{1}", ioe.Message, ioe.StackTrace);
             }
         }
 
-        //
-        //  Send request using HTTP.
-        //
         private static void SendRequestHttp(Parameters parameters)
         {
             var requestContents = GetInputDataFileContents(parameters);
@@ -93,14 +79,14 @@ namespace ClientTool
 
             if (parameters.VerboseMode)
             {
-                Console.WriteLine("\r\nrequest:");
+                Console.WriteLine(Environment.NewLine + "request:");
                 Console.WriteLine("--------------------------------------------------------------------------------");
                 Console.WriteLine(requestContents);
             }
 
-            var httpRequest = (HttpWebRequest)WebRequest.Create(new Uri(parameters.Url));
+            var httpRequest = (HttpWebRequest)WebRequest.Create(parameters.Url);
             httpRequest.Method = parameters.Method;
-            httpRequest.ContentType = String.Format("{0}; encoding='{1}'", parameters.ContentType, parameters.EncodingType);
+            httpRequest.ContentType = string.Format(CultureInfo.InvariantCulture, "{0}; encoding='{1}'", parameters.ContentType, parameters.EncodingType);
 
             if (!StoreRequestParameters(httpRequest, parameters))
             {
@@ -119,28 +105,26 @@ namespace ClientTool
             var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
 
             var responseStream = httpResponse.GetResponseStream();
-            var responseBytes = new Byte[httpResponse.ContentLength];
-            if (responseStream != null)
-            {
-                responseStream.Read(responseBytes, 0, (int)httpResponse.ContentLength);
-            }
+            var responseBytes = new byte[httpResponse.ContentLength];
 
-            if (!String.IsNullOrEmpty(parameters.OutputDataFilePath))
+            responseStream?.Read(responseBytes, 0, (int)httpResponse.ContentLength);
+
+            if (!string.IsNullOrEmpty(parameters.OutputDataFilePath))
             {
                 StoreResponseData(parameters, encoding.GetString(responseBytes));
             }
 
             if (parameters.VerboseMode)
             {
-                Console.WriteLine("\r\nresponse:");
+                Console.WriteLine(Environment.NewLine + "response:");
                 Console.WriteLine("--------------------------------------------------------------------------------");
                 Console.WriteLine(encoding.GetString(responseBytes));
 
-                Console.WriteLine("\r\nresponse HTTP status:");
+                Console.WriteLine(Environment.NewLine + "response HTTP status:");
                 Console.WriteLine("--------------------------------------------------------------------------------");
                 Console.WriteLine(httpResponse.StatusCode.ToString());
 
-                Console.WriteLine("\r\nresponse HTTP headers:");
+                Console.WriteLine(Environment.NewLine + "response HTTP headers:");
                 Console.WriteLine("--------------------------------------------------------------------------------");
                 foreach (var key in httpResponse.Headers.AllKeys)
                 {
@@ -149,17 +133,14 @@ namespace ClientTool
             }
         }
 
-        //
-        //  Get input data file contents.
-        //
-        private static String GetInputDataFileContents(Parameters parameters)
+        private static string GetInputDataFileContents(Parameters parameters)
         {
             if (!File.Exists(parameters.InputDataFilePath))
             {
                 return null;
             }
 
-            var data = new StringBuilder(Int16.MaxValue);
+            var data = new StringBuilder(short.MaxValue);
 
             try
             {
@@ -177,9 +158,6 @@ namespace ClientTool
             return null;
         }
 
-        //
-        //  Store response data.
-        //
         private static void StoreResponseData(Parameters parameters, string responseData)
         {
             try
@@ -192,41 +170,40 @@ namespace ClientTool
             }
         }
 
-        //
-        //  Create output data file.
-        //
         private static void CreateOutputDataFile(Parameters parameters, string responseData)
         {
             using (var fileStream = new FileStream(parameters.OutputDataFilePath, FileMode.Create))
             {
-                using (var writer = new StreamWriter(fileStream))
-                {
-                    writer.WriteLine(responseData);
-                    writer.Flush();
-                }
+                WriteOutputData(fileStream, responseData);
             }
         }
 
-        //
-        //  Store request parameters.
-        //
-        private static bool StoreRequestParameters(HttpWebRequest request, Parameters parameters)
+        private static void WriteOutputData(FileStream fileStream, string responseData)
         {
-            if (String.IsNullOrEmpty(parameters.RequestParameters))
+            using (var writer = new StreamWriter(fileStream))
+            {
+                writer.WriteLine(responseData);
+                writer.Flush();
+            }
+        }
+
+        private static bool StoreRequestParameters(WebRequest request, Parameters parameters)
+        {
+            if (string.IsNullOrEmpty(parameters.RequestParameters))
             {
                 return true;
             }
 
-            var enumerator = new CommaSeparatedValuesParser().Parse(parameters.RequestParameters);
+            var enumerator = new CommaSeparatedValues().Parse(parameters.RequestParameters);
 
             try
             {
                 while (enumerator.MoveNext())
                 {
-                    if (enumerator.Current != null)
+                    var variable = enumerator.Current as string;
+                    if (variable != null)
                     {
-                        var variable = (String)enumerator.Current;
-                        string[] variableParts = variable.Split(':');
+                        var variableParts = variable.Split(':');
 
                         if (variableParts.Length < 2)
                         {
@@ -246,4 +223,4 @@ namespace ClientTool
             return true;
         }
     }
-}
+}      

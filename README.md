@@ -1,8 +1,10 @@
 windows-utility-tools
 =====================
 
-Client Tool: retrieve files using HTTP or HTTPS protocol.
+Windows utility tools is based on .NET technolog and C# language only.
 
-Event Log Tool: create or delete a Windows event log.
+1) Client tool (retrieve files using HTTP or HTTPS protocol).
 
-Mail Tool: send mail using SMTP.
+2) Event log Tool (create or delete a Windows event log).
+
+3) Mail tool (send mail using SMTP).

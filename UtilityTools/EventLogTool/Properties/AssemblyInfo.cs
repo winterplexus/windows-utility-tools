@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wiregrass Code Technology")]
 [assembly: AssemblyProduct("Utility Tools")]
-[assembly: AssemblyCopyright("Copyright (c) Wiregrass Code Technology 2015-16")]
+[assembly: AssemblyCopyright("Copyright (c) Wiregrass Code Technology 2015-17")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

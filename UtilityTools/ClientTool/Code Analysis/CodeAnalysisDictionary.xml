@@ -4,5 +4,13 @@
         <Recognized>
             <Word>ClientTool</Word>
         </Recognized>
+        <DiscreteExceptions>
+            <Term>ClientTool</Term>
+        </DiscreteExceptions>
     </Words>
+    <Acronyms>
+        <CasingExceptions>
+            <Acronym>ClientTool</Acronym>
+        </CasingExceptions>
+    </Acronyms>
 </Dictionary>

@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ClientTool")]
-[assembly: AssemblyDescription("Utility Tools: HTTP Client Tool")]
+[assembly: AssemblyTitle("FolderTool")]
+[assembly: AssemblyDescription("Utility Tools: Windows Folder Tool")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wiregrass Code Technology")]
 [assembly: AssemblyProduct("Utility Tools")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("820d9cdc-4f35-4e77-b3bb-3199e98efa76")]
+[assembly: Guid("ebe1cb31-72da-479e-9349-9bd6ea7fa875")]
 
 // Version information for an assembly consists of the following four values:
 //

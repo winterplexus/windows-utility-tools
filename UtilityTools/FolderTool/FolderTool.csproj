@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E7B87783-C01F-4E7B-BDED-D078F8484584}</ProjectGuid>
+    <ProjectGuid>{EBE1CB31-72DA-479E-9349-9BD6EA7FA875}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MailTool</RootNamespace>
-    <AssemblyName>MailTool</AssemblyName>
+    <RootNamespace>Folder_Tool</RootNamespace>
+    <AssemblyName>Folder Tool</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -23,7 +23,6 @@
     <DefineConstants>TRACE;DEBUG;_DISPLAY_COPYRIGHT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Code Analysis\RuleSet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,9 +38,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>KeyFile.pfx</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,17 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Code Analysis\RuleSet.ruleset" />
     <None Include="KeyFile.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Code Analysis\CodeAnalysisDictionary.xml" />
+    <Folder Include="Code Analysis\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Documents\EmailTool.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Documents\FolderTool.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

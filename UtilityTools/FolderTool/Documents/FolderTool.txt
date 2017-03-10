@@ -1,0 +1,27 @@
+﻿
+ Utility Tools - Folder Tool
+ ===============================================================================
+
+ Synopsis
+ -------------------------------------------------------------------------------
+
+ Utility tool to manage Windows file folders (i.e., file directories).
+
+ Executable
+ -------------------------------------------------------------------------------
+
+ FolderTool.exe
+
+ Command Line Options
+ -------------------------------------------------------------------------------
+
+ -s  search file <name pattern> 
+ -d  delete file <name pattern>
+ -c  rename file <name pattern> <name pattern>
+
+ -t  <date stamp>
+ 
+ where:
+
+ [] contains options
+ <> contains parameters (quoted string if parameter contains space characters)

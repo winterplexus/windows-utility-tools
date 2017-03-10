@@ -1,7 +1,7 @@
 ﻿//
 //  Program.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 //             
 using System;
 using System.IO;
@@ -14,14 +14,8 @@ using System.Net;
 
 namespace MailTool
 {
-    //
-    //  Program class.
-    //
     public static class Program
     {
-        //
-        //  Main driver.
-        //
         public static void Main(string[] arguments)
         {
             DisplayVersion();
@@ -33,9 +27,6 @@ namespace MailTool
             }
         }
 
-        //
-        //  Display version.
-        //
         public static void DisplayVersion()
         {
             var assembly = Assembly.GetEntryAssembly();
@@ -59,12 +50,9 @@ namespace MailTool
                 Console.WriteLine("{0}", ((AssemblyCopyrightAttribute)copyrightAttributes[0]).Copyright);
             }
 #endif
-            Console.Write("\r\n");
+            Console.Write(Environment.NewLine);
         }
 
-        //
-        //  Send mail.
-        //
         private static void SendMail(Parameters parameters)
         {
             try
@@ -75,11 +63,11 @@ namespace MailTool
             }
             catch (SmtpFailedRecipientException sfre)
             {
-                Console.WriteLine("SMTP failed recipient exception-> {0}\r\n{1}", sfre.Message, sfre.StackTrace);
+                Console.WriteLine("SMTP failed recipient exception-> {0}" + Environment.NewLine + "{1}", sfre.Message, sfre.StackTrace);
             }
             catch (SmtpException se)
             {
-                Console.WriteLine("SMTP exception-> {0}\r\n{1}", se.Message, se.StackTrace);
+                Console.WriteLine("SMTP exception-> {0}" + Environment.NewLine + "{1}", se.Message, se.StackTrace);
 
                 if (se.InnerException != null)
                 {
@@ -88,7 +76,7 @@ namespace MailTool
             }
             catch (IOException ioe)
             {
-                Console.WriteLine("I/O exception-> {0}\r\n{1}", ioe.Message, ioe.StackTrace);
+                Console.WriteLine("I/O exception-> {0}" + Environment.NewLine + "{1}", ioe.Message, ioe.StackTrace);
 
                 if (ioe.InnerException != null)
                 {
@@ -97,9 +85,6 @@ namespace MailTool
             }
         }
 
-        //
-        //  Send mail using SMTP.
-        //
         private static void SendMailSmtp(Parameters parameters)
         {
             using (var message = new MailMessage())
@@ -115,9 +100,6 @@ namespace MailTool
             }
         }
 
-        //
-        //  Set mail message.
-        //
         private static void SetMessage(MailMessage message, Parameters parameters)
         {
             message.From = new MailAddress(parameters.MailFrom);
@@ -127,9 +109,6 @@ namespace MailTool
             message.Priority = parameters.MailPriorityLevel;
         }
 
-        //
-        //  Set mail message attachments.
-        //
         private static void SetMessageAttachments(MailMessage message, Parameters parameters)
         {
             if (parameters.MailAttachments == null)
@@ -146,20 +125,14 @@ namespace MailTool
                         continue;
                     }
 
-                    FileStream fileStream = new FileStream(mailAttachment, FileMode.Open, FileAccess.Read);
-                    if (fileStream == null)
+                    using (var fileStream = new FileStream(mailAttachment, FileMode.Open, FileAccess.Read))
                     {
-                        Console.WriteLine("error-> mail attachment file {0} cannot be opened or read");
-                        continue;
+                        message.Attachments.Add(new Attachment(fileStream, MediaTypeNames.Application.Octet));
                     }
-                    message.Attachments.Add(new Attachment(fileStream, MediaTypeNames.Application.Octet));
                 }
             }
         }
 
-        //
-        //  Set SMTP mail client.
-        //
         private static void SetClient(SmtpClient client, Parameters parameters)
         {
             if (parameters.SmtpPortNumber > 0)

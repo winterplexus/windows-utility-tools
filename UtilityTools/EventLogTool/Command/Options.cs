@@ -1,34 +1,23 @@
 ﻿//
 //  Options.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 //
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace EventLogTool
 {
-    //
-    //  Options class.
-    //
     public static class Options
     {
-        //
-        //  Options flag fields.
-        //
-        private const char CommandActionFlag = 'c';
-        private const char EventNameFlag = 'n';
-        private const char EventLogNameFlag = 'l';
+        private const char commandActionFlag = 'c';
+        private const char eventNameFlag = 'n';
+        private const char eventLogNameFlag = 'l';
 
-        //
-        //  Command action flag value fields.               
-        //
-        private const string CreateAction = "create";
-        private const string DeleteAction = "delete";
+        private const string createAction = "create";
+        private const string deleteAction = "delete";
 
-        //
-        //  Parse (arguments into parameters).
-        //
         public static bool Parse(string[] arguments, Parameters parameters)
         {
             if (arguments == null || arguments.Length < 1)
@@ -42,8 +31,6 @@ namespace EventLogTool
             }
 
             parameters.CommandAction = Parameters.CommandActionType.None;
-
-            bool invalidValue = true;
 
             for (var index = 0; index < arguments.Length; index++)
             {
@@ -60,15 +47,18 @@ namespace EventLogTool
                 var option = arguments[index][1];
 
                 index++;
+
+                bool invalidValue;
+
                 switch (option)
                 {
-                    case CommandActionFlag:
+                    case commandActionFlag:
                          invalidValue = ParseCommandActionValue(arguments, index, parameters);
                          break;
-                    case EventNameFlag:
+                    case eventNameFlag:
                          invalidValue = ParseEventNameValue(arguments, index, parameters);
                          break;
-                    case EventLogNameFlag:
+                    case eventLogNameFlag:
                          invalidValue = ParseEventLogNameValue(arguments, index, parameters);
                          break;
                     default:
@@ -87,12 +77,12 @@ namespace EventLogTool
                 Console.WriteLine("error-> command action is missing");
                 return false;
             }
-            if (String.IsNullOrEmpty(parameters.EventName))
+            if (string.IsNullOrEmpty(parameters.EventName))
             {
                 Console.WriteLine("error-> event name is missing");
                 return false;
             }
-            if (String.IsNullOrEmpty(parameters.EventLogName))
+            if (string.IsNullOrEmpty(parameters.EventLogName))
             {
                 Console.WriteLine("error-> event log name is missing");
                 return false;
@@ -101,22 +91,19 @@ namespace EventLogTool
             return true;
         }
 
-        //
-        //  Parse command action value.
-        //
         private static bool ParseCommandActionValue(string[] arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Length <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> command action value is missing");
                 return false;
             }
-            if (arguments[i].Equals(CreateAction, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(createAction, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.CommandAction = Parameters.CommandActionType.Create;
                 return true;
             }
-            if (arguments[i].Equals(DeleteAction, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(deleteAction, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.CommandAction = Parameters.CommandActionType.Delete;
                 return true;
@@ -125,12 +112,9 @@ namespace EventLogTool
             return false;
         }
 
-        //
-        //  Parse event name value.
-        //
-        private static bool ParseEventNameValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseEventNameValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> event name value is missing");
                 return false;
@@ -139,12 +123,9 @@ namespace EventLogTool
             return true;
         }
 
-        //
-        //  Parse event log name value.
-        //
-        private static bool ParseEventLogNameValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseEventLogNameValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> event log name value is missing");
                 return false;
@@ -153,15 +134,12 @@ namespace EventLogTool
             return true;
         }
 
-        //
-        //  Display usage.
-        //
         private static void DisplayUsage()
         {
-            Console.Write("usage: {0}.exe (options)\r\n", Process.GetCurrentProcess().ProcessName);
-            Console.Write("options: -{0} [{1}|{2}] ", CommandActionFlag, CreateAction, DeleteAction);
-            Console.Write("\t -{0} <event name> ", EventNameFlag);
-            Console.Write("\t -{0} <event log name>\r\n", EventLogNameFlag);
+            Console.Write("usage: {0}.exe (options)" + Environment.NewLine, Process.GetCurrentProcess().ProcessName);
+            Console.Write("options: -{0} [{1}|{2}] ", commandActionFlag, createAction, deleteAction);
+            Console.Write("\t -{0} <event name> ", eventNameFlag);
+            Console.Write("\t -{0} <event log name>" + Environment.NewLine, eventLogNameFlag);
         }
     }
-}
+}   

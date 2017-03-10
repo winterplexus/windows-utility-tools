@@ -1,6 +1,0 @@
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\MailTool\bin\Debug\Documents\EmailTool.txt
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\MailTool\bin\Debug\MailTool.exe.config
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\MailTool\bin\Debug\MailTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\MailTool\bin\Debug\MailTool.pdb
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\MailTool\obj\Debug\MailTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\MailTool\obj\Debug\MailTool.pdb

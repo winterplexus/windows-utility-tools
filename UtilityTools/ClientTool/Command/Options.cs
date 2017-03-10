@@ -1,47 +1,33 @@
 ﻿//
 //  Options.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 //
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ClientTool
 {
-    //
-    //  Options class.
-    //
-    public class Options
+    public static class Options
     {
-        //
-        //  Options flag fields.
-        //
-        private const char UrlFlag = 'u';
-        private const char ContentTypeFlag = 'c';
-        private const char EncodingTypeFlag = 'e';
-        private const char InputDataFilePathFlag = 'i';
-        private const char OutputDataFilePathFlag = 'o';
-        private const char MethodFlag = 'm';
-        private const char ProxyParametersFlag = 'p';
-        private const char RequestParametersFlag = 'r';
-        private const char VerboseMode = 'v';
+        private const char urlFlag = 'u';
+        private const char contentTypeFlag = 'c';
+        private const char encodingTypeFlag = 'e';
+        private const char inputDataFilePathFlag = 'i';
+        private const char outputDataFilePathFlag = 'o';
+        private const char methodFlag = 'm';
+        private const char proxyParametersFlag = 'p';
+        private const char requestParametersFlag = 'r';
+        private const char verboseMode = 'v';
 
-        //
-        //  Boolean flag literal fields.                
-        //
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+        private const string trueValue = "true";
+        private const string falseValue = "false";
 
-        //
-        //  Method flag literal fields.
-        //
-        private const string GetValue = "get";
-        private const string PostValue = "post";
-        private const string PutValue = "put";
+        private const string getValue = "get";
+        private const string postValue = "post";
+        private const string putValue = "put";
 
-        //
-        //  Parse (arguments into parameters).
-        //
         public static bool Parse(string[] arguments, Parameters parameters)
         {
             if (arguments == null || arguments.Length < 1)
@@ -53,8 +39,6 @@ namespace ClientTool
             {
                 throw new ArgumentException("parameters argument is null");
             }
-
-            bool invalidValue = true;
 
             for (var index = 0; index < arguments.Length; index++)
             {
@@ -70,39 +54,42 @@ namespace ClientTool
 
                 parameters.ContentType = "text/html";
                 parameters.EncodingType = "utf-8";
-                parameters.Method = GetValue;
+                parameters.Method = getValue;
                 parameters.VerboseMode = false;
 
                 var option = arguments[index][1];
 
                 index++;
+
+                bool invalidValue;
+
                 switch (option)
                 {
-                    case UrlFlag:
+                    case urlFlag:
                          invalidValue = ParseUrlValue(arguments, index, parameters);
                          break;
-                    case ContentTypeFlag:
+                    case contentTypeFlag:
                          invalidValue = ParseContentTypeValue(arguments, index, parameters);
                          break;
-                    case EncodingTypeFlag:
+                    case encodingTypeFlag:
                          invalidValue = ParseEncodingTypeValue(arguments, index, parameters);
                          break;
-                    case InputDataFilePathFlag:
+                    case inputDataFilePathFlag:
                          invalidValue = ParseInputDataFilePathValue(arguments, index, parameters);
                          break;
-                    case OutputDataFilePathFlag:
+                    case outputDataFilePathFlag:
                          invalidValue = ParseOutputDataFilePathValue(arguments, index, parameters);
                          break;
-                    case MethodFlag:
+                    case methodFlag:
                          invalidValue = ParseMethodValue(arguments, index, parameters);
                          break;
-                    case ProxyParametersFlag:
+                    case proxyParametersFlag:
                          invalidValue = ParseProxyParametersValue(arguments, index, parameters);
                          break;
-                    case RequestParametersFlag:
+                    case requestParametersFlag:
                          invalidValue = ParseRequestParametersValue(arguments, index, parameters);
                          break;
-                    case VerboseMode:
+                    case verboseMode:
                          invalidValue = ParseVerboseModeValue(arguments, index, parameters);
                          break;
                     default:
@@ -119,26 +106,28 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse HTTP URL value.
-        //
-        private static bool ParseUrlValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseUrlValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP URL value is missing");
                 return false;
             }
-            parameters.Url = arguments[i];
-            return true;
+            try
+            {
+                parameters.Url = new Uri(arguments[i]);
+                return true;
+            }
+            catch (UriFormatException)
+            {
+                Console.WriteLine("error-> HTTP URL is not properly formatted");
+            }
+            return false;
         }
 
-        //
-        //  Parse HTTP content type value.
-        //
-        private static bool ParseContentTypeValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseContentTypeValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP content type value is missing");
                 return false;
@@ -147,12 +136,9 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse HTTP encoding type value.
-        //
-        private static bool ParseEncodingTypeValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseEncodingTypeValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP encoding type value is missing");
                 return false;
@@ -161,12 +147,9 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse HTTP input data file path value.
-        //
-        private static bool ParseInputDataFilePathValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseInputDataFilePathValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP input data file path value is missing");
                 return false;
@@ -175,12 +158,9 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse HTTP output data file path value.
-        //
-        private static bool ParseOutputDataFilePathValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseOutputDataFilePathValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP output data file path value is missing");
                 return false;
@@ -189,41 +169,35 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse HTTP method value.
-        //
-        private static bool ParseMethodValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMethodValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP method value is missing");
                 return false;
             }
-            if (arguments[i].Equals(GetValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(getValue, StringComparison.CurrentCultureIgnoreCase))
             {
-                parameters.Method = GetValue;
+                parameters.Method = getValue;
                 return true;
             }
-            if (arguments[i].Equals(PostValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(postValue, StringComparison.CurrentCultureIgnoreCase))
             {
-                parameters.Method = PostValue;
+                parameters.Method = postValue;
                 return true;
             }
-            if (arguments[i].Equals(PutValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(putValue, StringComparison.CurrentCultureIgnoreCase))
             {
-                parameters.Method = PutValue;
+                parameters.Method = putValue;
                 return true;
             }
             Console.WriteLine("error-> invalid HTTP method value");
             return false;
         }
 
-        //
-        //  Parse HTTP proxy parameters value.
-        //
-        private static bool ParseProxyParametersValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseProxyParametersValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP proxy parameters value is missing");
                 return false;
@@ -232,12 +206,9 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse HTTP request parameters value.
-        //
-        private static bool ParseRequestParametersValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseRequestParametersValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> HTTP request parameters value is missing");
                 return false;
@@ -246,22 +217,19 @@ namespace ClientTool
             return true;
         }
 
-        //
-        //  Parse verbose mode Boolean value.
-        //
-        private static bool ParseVerboseModeValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseVerboseModeValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> verbose mode Boolean value is missing");
                 return false;
             }
-            if (arguments[i].Equals(TrueValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(trueValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.VerboseMode = true;
                 return true;
             }
-            if (arguments[i].Equals(FalseValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(falseValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.VerboseMode = false;
                 return true;
@@ -270,21 +238,18 @@ namespace ClientTool
             return false;
         }
 
-        //
-        //  Display usage.
-        //
         private static void DisplayUsage()
         {
             Console.WriteLine("usage: {0}.exe (options)\r\n", Process.GetCurrentProcess().ProcessName);
-            Console.WriteLine("options: -{0} <HTTP URL>", UrlFlag);
-            Console.WriteLine("\t -{0} <HTTP content type (default: text/html>", ContentTypeFlag);
-            Console.WriteLine("\t -{0} <HTTP encoding type (default: utf-8)>", EncodingTypeFlag);
-            Console.WriteLine("\t -{0} <HTTP input data file path>", InputDataFilePathFlag);
-            Console.WriteLine("\t -{0} <HTTP output data file path>", OutputDataFilePathFlag);
-            Console.WriteLine("\t -{0} [{1}|{2}|{3}] (default HTTP method: {4})", MethodFlag, GetValue, PostValue, PutValue, GetValue);
-            Console.WriteLine("\t -{0} \"proxy HTTP parameters\"", ProxyParametersFlag);
-            Console.WriteLine("\t -{0} \"request HTTP parameters\"", RequestParametersFlag);
-            Console.WriteLine("\t -{0} [{1}|{2}] (default verbose mode: {3})", VerboseMode, TrueValue, FalseValue, FalseValue);
+            Console.WriteLine("options: -{0} <HTTP URL>", urlFlag);
+            Console.WriteLine("\t -{0} <HTTP content type (default: text/html>", contentTypeFlag);
+            Console.WriteLine("\t -{0} <HTTP encoding type (default: utf-8)>", encodingTypeFlag);
+            Console.WriteLine("\t -{0} <HTTP input data file path>", inputDataFilePathFlag);
+            Console.WriteLine("\t -{0} <HTTP output data file path>", outputDataFilePathFlag);
+            Console.WriteLine("\t -{0} [{1}|{2}|{3}] (default HTTP method: {4})", methodFlag, getValue, postValue, putValue, getValue);
+            Console.WriteLine("\t -{0} \"proxy HTTP parameters\"", proxyParametersFlag);
+            Console.WriteLine("\t -{0} \"request HTTP parameters\"", requestParametersFlag);
+            Console.WriteLine("\t -{0} [{1}|{2}] (default verbose mode: {3})", verboseMode, trueValue, falseValue, falseValue);
         }
     }
-}
+}                              

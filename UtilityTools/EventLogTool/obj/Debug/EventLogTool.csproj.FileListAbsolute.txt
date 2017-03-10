@@ -1,7 +1,0 @@
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\Utility Tools\EventLog Tool\bin\Debug\EventLogTool.exe.config
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLogTool\bin\Debug\Documents\EventLogTool.txt
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLogTool\bin\Debug\EventLogTool.exe.config
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLogTool\bin\Debug\EventLogTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLogTool\bin\Debug\EventLogTool.pdb
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLogTool\obj\Debug\EventLogTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLogTool\obj\Debug\EventLogTool.pdb

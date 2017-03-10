@@ -1,6 +1,0 @@
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Debug\Documents\ClientTool.txt
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Debug\ClientTool.exe.config
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Debug\ClientTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\bin\Debug\ClientTool.pdb
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\obj\Debug\ClientTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\ClientTool\obj\Debug\ClientTool.pdb

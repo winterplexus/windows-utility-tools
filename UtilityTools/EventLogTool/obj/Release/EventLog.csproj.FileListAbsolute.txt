@@ -1,6 +1,0 @@
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLog\bin\Release\EventLogTool.exe.config
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLog\bin\Release\EventLogTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLog\bin\Release\EventLogTool.pdb
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLog\obj\Release\EventLog.csprojResolveAssemblyReference.cache
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLog\obj\Release\EventLogTool.exe
-C:\Users\spanglee\Documents\Visual Studio 2015\Projects\projects\utility\UtilityTools\EventLog\obj\Release\EventLogTool.pdb

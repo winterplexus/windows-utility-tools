@@ -1,51 +1,37 @@
 ﻿//
 //  Options.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 // 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Mail;
 
 namespace MailTool
 {
-    //
-    //  Options class.
-    //
     public static class Options
     {
-        //
-        //  Options flag fields.
-        //
-        private const char ToFlag = 't';
-        private const char FromFlag = 'f';
-        private const char SubjectFlag = 's';
-        private const char BodyFlag = 'b';
-        private const char AttachmentFlag = 'a';
-        private const char PriorityLevelFlag = 'l';
-        private const char SmtpHostNameFlag = 'h';
-        private const char SmtpUserNameFlag = 'u';
-        private const char SmtpPasswordFlag = 'p';
-        private const char SmtpPortNumberFlag = 'n';
-        private const char SmtpUseSsl = 'e';
+        private const char toFlag = 't';
+        private const char fromFlag = 'f';
+        private const char subjectFlag = 's';
+        private const char bodyFlag = 'b';
+        private const char attachmentFlag = 'a';
+        private const char priorityLevelFlag = 'l';
+        private const char smtpHostNameFlag = 'h';
+        private const char smtpUserNameFlag = 'u';
+        private const char smtpPasswordFlag = 'p';
+        private const char smtpPortNumberFlag = 'n';
+        private const char smtpUseSsl = 'e';
 
-        //
-        //  Boolean flag literal fields.             
-        //
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+        private const string trueValue = "true";
+        private const string falseValue = "false";
 
-        //
-        //  Priority level flag literal fields.
-        //
-        private const string LowValue = "low";
-        private const string NormalValue = "normal";
-        private const string HighValue = "high";
+        private const string lowValue = "low";
+        private const string normalValue = "normal";
+        private const string highValue = "high";
 
-        //
-        //  Parse (arguments into parameters).
-        //
         public static bool Parse(string[] arguments, Parameters parameters)
         {
             if (arguments == null || arguments.Length < 1)
@@ -57,8 +43,6 @@ namespace MailTool
             {
                 throw new ArgumentException("parameters argument is null");
             }
-
-            bool invalidValue = true;
 
             for (var index = 0; index < arguments.Length; index++)
             {
@@ -75,39 +59,42 @@ namespace MailTool
                 var option = arguments[index][1];
 
                 index++;
+
+                bool invalidValue;
+
                 switch (option)
                 {
-                    case ToFlag:
+                    case toFlag:
                          invalidValue = ParseMailToValue(arguments, index, parameters);
                          break;
-                    case FromFlag:
+                    case fromFlag:
                          invalidValue = ParseMailFromValue(arguments, index, parameters);
                          break;
-                    case SubjectFlag:
+                    case subjectFlag:
                          invalidValue = ParseMailSubjectValue(arguments, index, parameters);
                          break;
-                    case BodyFlag:
+                    case bodyFlag:
                          invalidValue = ParseMailBodyValue(arguments, index, parameters);
                          break;
-                    case AttachmentFlag:
+                    case attachmentFlag:
                          invalidValue = ParseMailAttachmentValue(arguments, index, parameters);
                          break;
-                    case PriorityLevelFlag:
+                    case priorityLevelFlag:
                          invalidValue = ParseMailPriorityLevelValue(arguments, index, parameters);
                          break;
-                    case SmtpHostNameFlag:
+                    case smtpHostNameFlag:
                          invalidValue = ParseSmtpHostNameValue(arguments, index, parameters);
                          break;
-                    case SmtpPortNumberFlag:
+                    case smtpPortNumberFlag:
                          invalidValue = ParseSmtpPortNumberValue(arguments, index, parameters);
                          break;
-                    case SmtpUseSsl:
+                    case smtpUseSsl:
                          invalidValue = ParseSmtpUseSslValue(arguments, index, parameters);
                          break;
-                    case SmtpUserNameFlag:
+                    case smtpUserNameFlag:
                          invalidValue = ParseSmtpUserNameValue(arguments, index, parameters);
                          break;
-                    case SmtpPasswordFlag:
+                    case smtpPasswordFlag:
                          invalidValue = ParseSmtpPasswordValue(arguments, index, parameters);
                          break;
                     default:
@@ -123,12 +110,9 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse mail to value.
-        //
-        private static bool ParseMailToValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMailToValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> mail to value is missing");
                 return false;
@@ -137,12 +121,9 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse mail from value.
-        //
-        private static bool ParseMailFromValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMailFromValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> mail from value is missing");
                 return false;
@@ -151,12 +132,9 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse mail subject value.
-        //
-        private static bool ParseMailSubjectValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMailSubjectValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> mail subject value is missing");
                 return false;
@@ -165,12 +143,9 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse mail body value.
-        //
-        private static bool ParseMailBodyValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMailBodyValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> mail body value is missing");
                 return false;
@@ -179,45 +154,35 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse mail attachment value.
-        //
-        private static bool ParseMailAttachmentValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMailAttachmentValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> mail attachment value is missing");
                 return false;
             }
-            if (parameters.MailAttachments == null)
-            {
-                parameters.MailAttachments = new List<string>();
-            }
-            parameters.MailAttachments.Add(arguments[i]);
+            parameters.AddMailAttachment(arguments[i]);
             return true;
         }
 
-        //
-        //  Parse mail priority level value.
-        //
-        private static bool ParseMailPriorityLevelValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseMailPriorityLevelValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> mail priority value is missing");
                 return false;
             }
-            if (arguments[i].Equals(LowValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(lowValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.MailPriorityLevel = MailPriority.Low;
                 return true;
             }
-            if (arguments[i].Equals(NormalValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(normalValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.MailPriorityLevel = MailPriority.Normal;
                 return true;
             }
-            if (arguments[i].Equals(HighValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(highValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.MailPriorityLevel = MailPriority.High;
                 return true;
@@ -226,12 +191,9 @@ namespace MailTool
             return false;
         }
 
-        //
-        //  Parse SMTP host name value.
-        //
-        private static bool ParseSmtpHostNameValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseSmtpHostNameValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> SMTP host name value is missing");
                 return false;
@@ -240,12 +202,9 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse SMTP port number value.
-        //
-        private static bool ParseSmtpPortNumberValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseSmtpPortNumberValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> SMTP port number value is missing");
                 return false;
@@ -261,22 +220,19 @@ namespace MailTool
             return false;
         }
 
-        //
-        //  Parse SMTP use SSL Boolean value.
-        //
-        private static bool ParseSmtpUseSslValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseSmtpUseSslValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> SMTP use SSL Boolean value is missing");
                 return false;
             }
-            if (arguments[i].Equals(TrueValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(trueValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.SmtpUseSsl = true;
                 return true;
             }
-            if (arguments[i].Equals(FalseValue, StringComparison.CurrentCultureIgnoreCase))
+            if (arguments[i].Equals(falseValue, StringComparison.CurrentCultureIgnoreCase))
             {
                 parameters.SmtpUseSsl = false;
                 return true;
@@ -285,12 +241,9 @@ namespace MailTool
             return false;
         }
 
-        //
-        //  Parse SMTP user name value.
-        //
-        private static bool ParseSmtpUserNameValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseSmtpUserNameValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> SMTP user name value is missing");
                 return false;
@@ -299,12 +252,9 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Parse SMTP password value.
-        //
-        private static bool ParseSmtpPasswordValue(string[] arguments, int i, Parameters parameters)
+        private static bool ParseSmtpPasswordValue(IReadOnlyList<string> arguments, int i, Parameters parameters)
         {
-            if (arguments.Length <= i || String.IsNullOrEmpty(arguments[i]))
+            if (arguments.Count <= i || string.IsNullOrEmpty(arguments[i]))
             {
                 Console.WriteLine("error-> SMTP password value is missing");
                 return false;
@@ -313,23 +263,20 @@ namespace MailTool
             return true;
         }
 
-        //
-        //  Display usage.
-        //
         private static void DisplayUsage()
         {
-            Console.WriteLine("usage: {0}.exe (options)\r\n", Process.GetCurrentProcess().ProcessName);
-            Console.WriteLine("options: -{0} <mail to address>", ToFlag);
-            Console.WriteLine("\t -{0} <mail from address>", FromFlag);
-            Console.WriteLine("\t -{0} <mail subject>", SubjectFlag);
-            Console.WriteLine("\t -{0} <mail body>", BodyFlag);
-            Console.WriteLine("\t -{0} <mail attachment file name>", AttachmentFlag);
-            Console.WriteLine("\t -{0} [{1}|{2}|{3}] (default priority level: {4})", PriorityLevelFlag, LowValue, NormalValue, HighValue, NormalValue);
-            Console.WriteLine("\t -{0} <SMTP host name>", SmtpHostNameFlag);
-            Console.WriteLine("\t -{0} <SMTP port number>", SmtpPortNumberFlag);
-            Console.WriteLine("\t -{0} <SMTP user name>", SmtpUserNameFlag);
-            Console.WriteLine("\t -{0} <SMTP password>", SmtpPasswordFlag);
-            Console.WriteLine("\t -{0} [{1}|{2}] (default use SSL: {3})", SmtpUseSsl, TrueValue, FalseValue, FalseValue);
+            Console.WriteLine("usage: {0}.exe (options)" + Environment.NewLine, Process.GetCurrentProcess().ProcessName);
+            Console.WriteLine("options: -{0} <mail to address>", toFlag);
+            Console.WriteLine("\t -{0} <mail from address>", fromFlag);
+            Console.WriteLine("\t -{0} <mail subject>", subjectFlag);
+            Console.WriteLine("\t -{0} <mail body>", bodyFlag);
+            Console.WriteLine("\t -{0} <mail attachment file name>", attachmentFlag);
+            Console.WriteLine("\t -{0} [{1}|{2}|{3}] (default priority level: {4})", priorityLevelFlag, lowValue, normalValue, highValue, normalValue);
+            Console.WriteLine("\t -{0} <SMTP host name>", smtpHostNameFlag);
+            Console.WriteLine("\t -{0} <SMTP port number>", smtpPortNumberFlag);
+            Console.WriteLine("\t -{0} <SMTP user name>", smtpUserNameFlag);
+            Console.WriteLine("\t -{0} <SMTP password>", smtpPasswordFlag);
+            Console.WriteLine("\t -{0} [{1}|{2}] (default use SSL: {3})" + Environment.NewLine, smtpUseSsl, trueValue, falseValue, falseValue);
         }
     }
 }

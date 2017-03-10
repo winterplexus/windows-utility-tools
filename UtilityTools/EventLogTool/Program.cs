@@ -1,7 +1,7 @@
 ﻿//
 //  Program.cs
 //
-//  Copyright (c) Wiregrass Code Technology 2015-16
+//  Copyright (c) Wiregrass Code Technology 2015-17
 //
 using System;
 using System.ComponentModel;
@@ -12,14 +12,8 @@ using System.Reflection;
 
 namespace EventLogTool
 {
-    //
-    //  Program class.
-    //
     public static class Program
     {
-        //
-        //  Main driver.
-        //
         public static void Main(string[] arguments)
         {
             DisplayVersion();
@@ -39,9 +33,6 @@ namespace EventLogTool
             }
         }
 
-        //
-        //  Display version.
-        //
         public static void DisplayVersion()
         {
             var assembly = Assembly.GetEntryAssembly();
@@ -65,12 +56,9 @@ namespace EventLogTool
                 Console.WriteLine("{0}", ((AssemblyCopyrightAttribute)copyrightAttributes[0]).Copyright);
             }
 #endif
-            Console.Write("\r\n");
+            Console.Write(Environment.NewLine);
         }
 
-        //
-        //  Create event log.
-        //
         private static void CreateEventLog(Parameters parameters)
         {
             try
@@ -90,9 +78,6 @@ namespace EventLogTool
             }
         }
 
-        //
-        //  Delete event log.
-        //
         private static void DeleteEventLog(Parameters parameters)
         {
             try
@@ -103,16 +88,16 @@ namespace EventLogTool
             }
             catch (ArgumentException ae)
             {
-                Console.WriteLine("argument exception-> {0}\r\n{1}", ae.Message, ae.StackTrace);
+                Console.WriteLine("argument exception-> {0}" + Environment.NewLine + "{1}", ae.Message, ae.StackTrace);
             }
             catch (InvalidOperationException ioe)
             {
-                Console.WriteLine("invalid operation exception-> {0}\r\n{1}", ioe.Message, ioe.StackTrace);
+                Console.WriteLine("invalid operation exception-> {0}" + Environment.NewLine + "{1}", ioe.Message, ioe.StackTrace);
             }
             catch (Win32Exception we)
             {
-                Console.WriteLine("WIN32 exception-> {0}\r\n{1}", we.Message, we.StackTrace);
+                Console.WriteLine("WIN32 exception-> {0}" + Environment.NewLine + "{ 1}", we.Message, we.StackTrace);
             }
         }
     }
-}
+}    
