@@ -36,3 +36,5 @@
  -------------------------------------------------------------------------------
 
  "<proxy host name:proxy post number>;username=<user name>;password=<password>"
+
+ Copyright (c) Wiregrass Code Technology 2015-2021

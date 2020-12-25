@@ -31,3 +31,5 @@
 
  [] contains options
  <> contains parameters (quoted string if parameter contains space characters)
+
+ Copyright (c) Wiregrass Code Technology 2015-2021
